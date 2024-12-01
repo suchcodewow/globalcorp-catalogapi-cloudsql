@@ -1,0 +1,42 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: ondemandCatalogEnv
+  title: Catalogapi environment
+  description: Creates a catalogapi environment for isolated testing
+  actionButton:
+    text: Create
+  icon: java
+  tags:
+    - java
+spec:
+  owner: backendteam@globalcorp.com
+  type: service
+  parameters:
+    - title: Parameters for build environment
+      required:
+        - uniqueId
+        - backendEnv
+      properties:
+        uniqueId:
+          title: Enter a unique identifier
+          type: string
+          description: use lowercase alphanumeric only
+        backendEnv:
+          title: Which backend database environment?
+          enum: ["silver", "green"]
+          description: select legacy or modern schema
+  steps:
+    - id: trigger
+      name: Deploy new api with selected backend
+      action: trigger:harness-pipeline
+      input:
+        url: ""
+        inputset:
+          uniqueIdentifer: ${{ parameters.uniqueId }}
+          database: ${{ parameters.backendEnv }}
+        apikey: ${{ parameters.token }}
+  output:
+    links:
+      - title: Pipeline Details
+        url: ${{ steps.trigger.output.PipelineUrl }}
