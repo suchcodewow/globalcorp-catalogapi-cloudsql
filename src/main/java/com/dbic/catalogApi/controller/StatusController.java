@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 
 @RestController
 public class StatusController {
-	@Value("${app.appVersion}")
+	@Value("${app.appVersion:notset}")
     private String appVersion;
-	@Value("${spring.cloud.gcp.sql.instance-connection-name}")
+	@Value("${spring.cloud.gcp.sql.instance-connection-name:notset}")
     private String instance;
-	@Value("${spring.cloud.gcp.sql.database-name}")
+	@Value("${spring.cloud.gcp.sql.database-name:notset}")
     private String database;
 
 	@GetMapping("/")
