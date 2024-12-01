@@ -1,13 +1,27 @@
 package com.dbic.catalogApi.controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
+
 @RestController
 public class StatusController {
-    private static final String template = "OK";
-
+	@Value("${app.appVersion}")
+    private String appVersion;
+	@Value("${spring.cloud.gcp.sql.instance-connection-name}")
+    private String instance;
+	@Value("${spring.cloud.gcp.sql.database-name}")
+    private String database;
 
 	@GetMapping("/")
-	public Status status() {
-		return new Status(String.format(template));
+		public Map<String, String> statusMessage() {
+    	HashMap<String, String> map = new HashMap<>();
+    	map.put("CloudSqlInstance", instance);
+    	map.put("Database", database);
+    	map.put("appVersion", appVersion);
+    	map.put("Status", "OK");
+    return map;
 	}
 }
