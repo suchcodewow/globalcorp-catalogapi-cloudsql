@@ -18,10 +18,10 @@ public class StatusController {
 	@GetMapping("/")
 		public Map<String, String> statusMessage() {
     	HashMap<String, String> map = new HashMap<>();
-    	map.put("CloudSqlInstance", instance);
+    	map.put("instance", instance);
     	map.put("Database", database);
     	map.put("appVersion", appVersion);
-    	map.put("Status", "OK");
+    	map.put("Status", "OK @ /api/v1/catalog");
     return map;
 	}
 }
